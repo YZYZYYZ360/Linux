@@ -1,12 +1,31 @@
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Delaunay_triangulation_2.h>
+#include<CGAL/IO/STL.h>
+#include<CGAL/Surface_mesh.h>
+//#include<CGAL/draw_triangulation_2.h>
 #include <iostream>
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Delaunay_triangulation_2<K> Delaunay;
 typedef K::Point_2 Point;
 
+// 新增STL加载函数
+void load_stl_demo(){
+    CGAL::Surface_mesh<K::Point_3> mesh;
+
+    // 打开STL文件
+    std::ifstream input("/home/yyz/Model_STL/xyzCalibration_cube.stl",std::ios::binary);
+    if(!input){
+        std::cerr<<("无法打开STL文件！")<<std::endl;
+        return;
+    }
+
+    std::cout<<"STL顶点数: "<<mesh.num_vertices()<<std::endl;
+    std::cout<<"STL面片数: "<<mesh.num_faces()<<std::endl;
+}
+
 int main(){
+    load_stl_demo();
     // 生成随机点（模拟3D打印的切片轮廓点）
     std::vector<Point> points={
         Point(0,0),Point(1,0),Point(0,1),Point(1,1),Point(0.5,0.5)
@@ -29,7 +48,6 @@ int main(){
         }
     }
 
-
-
     return 0;
 }
+
