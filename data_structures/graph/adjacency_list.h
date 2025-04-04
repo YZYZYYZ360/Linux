@@ -51,13 +51,6 @@ public:
 
 };
 
-template<typename Vertex>
-void visualize(const usefulGraph<Vertex>& graph, const std::string& filename) {
-	std::ofstream dotFile(filename + ".dot");
-	dotFile << "digraph G{\n";
-
-}
-
 int main() {
 	FlexibleGraph<std::string> socialNetwork;
 	socialNetwork.addEdge("Alice", "Bob");
@@ -76,3 +69,6 @@ int main() {
 	std::cout << "删除 Alice 到 Bob 的边后，Alice 的度: " << userfulsocialNetwork.degree("Alice") << std::endl;
 
 }
+
+
+

@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/cgal_demo.dir/main.cpp.o -o cgal_demo  -lgmpxx -lmpfr -lgmp 
