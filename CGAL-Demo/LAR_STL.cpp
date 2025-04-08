@@ -70,6 +70,12 @@ void LAR_STL::manifold_repair() {
     // PMP::remove_self_intersections(mesh);
 }
 
+// //高级修复
+// void LAR_STL::advanced_repair(Surface_mesh&mesh){
+//     // 缝合微小缝隙（阈值0.1mm）
+//     PMP::stitch_borders(mesh,0.1,CGAL::parameters::apply_per_connected_component(true));
+// }
+
 // 加载并修复 STL 文件
 bool LAR_STL::load_and_repair(const std::string& filename) {
     std::ifstream input(filename, std::ios::binary);
