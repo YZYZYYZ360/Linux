@@ -32,7 +32,8 @@ public:
     bool save_repaired_mesh(const std::string& outfilename) const;
     // 流形验证
     bool is_manifold();
-
+    // 高级修复
+    void advanced_repair(Surface_mesh&mesh);
 private:
     Surface_mesh mesh;
     bool is_loaded_and_repaired;
