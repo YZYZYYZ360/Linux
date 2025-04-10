@@ -35,3 +35,36 @@ void extract_k_ring(Vertex_handle& v,int k,std::vector<Vertex_handle>& qv){
         }while(++e!=e_end);
     }
 }
+
+int main(int argc,char** argv){
+    const std::string filename=(argc>1)?argv[1]:CGAL::data_file_path("meshes/blobby.off");
+    Polyhedron poly;
+    if(!PMP::IO::read_polygon_mesh(filename,poly)||!CGAL::is_triangle_mesh(poly)){
+        std::cerr<<"Invalid input."<<std::endl;
+        return 1;
+    }
+    std::vector<Polyhedron::Facet_handle> new_facets;
+    std::vector<Polyhedron::Vertex_handle> new_vertices;
+
+    PMP::refine(poly,faces(poly),std::back_inserter(new_facets),std::back_inserter(new_vertices),CGAL::parameters::density_control_factor(2.));
+
+    std::ofstream refined_off("refined.off");
+    refined_off.precision(17);
+    refined_off<<poly;
+    refined_off.close();
+    std::cout<<"Refinement added"<<new_vertices.size()<<"vertices."<<std::endl;
+
+    Polyhedron::Vertex_iterator v=poly.vertices_begin();
+    std::advance(v, 82/*e.g.*/);
+    std::vector<Vertex_handle> region;
+    extract_k_ring(v, 12/*e.g.*/, region);
+    bool success = PMP::fair(poly, region);
+    std::cout << "Fairing : " << (success ? "succeeded" : "failed") << std::endl;
+
+    std::ofstream failed_off("failed.off");
+    failed_off.precision(17);
+    failed_off<<poly;
+    failed_off.close();
+    
+    return 0;
+}
